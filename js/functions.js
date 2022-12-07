@@ -5,6 +5,10 @@
 function click_filter_element (event) {
   event.stopPropagation();
   event.currentTarget.classList.toggle("selected");
+<<<<<<< HEAD
+=======
+
+>>>>>>> click_filter_element
   /*
     ARGUMENTS
       event: event-object created when user clicks on one of the filter elements.
@@ -31,13 +35,15 @@ function create_filter_element (data) {
   textContent = data.textContent
   parent = data.parent
 
-  const new_filter_element = document.createElement("li");
-  new_filter_element.classList.add(klass);
-  new_filter_element.textContent = `${textContent}`;
-  new_filter_element.addEventListener("click", (e)=>{
+  const dom = document.createElement("li");
+  dom.classList.add(klass);
+  dom.textContent = `${textContent}`;
+  dom.addEventListener("click", (e)=>{
     click_filter_element(event)
   })
-  parent.append(new_filter_element)
+  parent.append(dom)
+
+  return dom
 
   /*
     ARGUMENTS
@@ -155,7 +161,7 @@ function create_levels_filter () {
       textContent: level.name,
     }
     );
-    dom.dataset.id = level.id; // ?????
+    dom.dataset.id = level.id;
   }
   array_each(LEVELS, create_level);
 }
