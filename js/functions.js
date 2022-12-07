@@ -3,8 +3,7 @@
 // G
 // CODE According to specification
 function click_filter_element (event) {
-  event.stopPropagation();
-  event.currentTarget.classList.toggle("selected")
+
 
   /*
     ARGUMENTS
