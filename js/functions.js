@@ -234,6 +234,19 @@ function create_language_filter () {
 }
 
 
+function create_programme_filters(array_category) {
+  function create_filter(filter_category) {
+    const dom = create_filter_element ({
+      parent: document.querySelector(`#${array_category_name} > ul`),
+      class: "selected",
+      textContent: filter_category.name
+    });
+    dom.dataset.id = filter_category.id;
+  }
+  array_each(array_category, create_filter);
+}
+
+
 
 // G / VG (see details in specification)
 // CODE according to specifications
