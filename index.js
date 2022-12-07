@@ -33,4 +33,3 @@ update_programmes();
 
 // VG
 // Add Interaction of button toggle-all-cities
-

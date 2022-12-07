@@ -236,11 +236,16 @@ function create_language_filter () {
 
 function create_programme_filters(array_category) {
   let array_category_name = confirm_category;
-  function confirm_category(array_category) {
-    if (condition) {
-      
-    }
-  }
+  function confirm_category() {
+    if (array_category === SUBJECTS) {
+      return "subject_filter"
+    } else if (array_category === LEVELS) {
+      return "level_filter"
+    } else if (array_category === LANGUAGES) {
+      return "language_filter"
+    };
+  };
+
   function create_filter(filter_category) {
     const dom = create_filter_element ({
       parent: document.querySelector(`#${array_category_name} > ul`),
