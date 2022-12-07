@@ -5,10 +5,6 @@
 function click_filter_element (event) {
   event.stopPropagation();
   event.currentTarget.classList.toggle("selected");
-<<<<<<< HEAD
-=======
-
->>>>>>> click_filter_element
   /*
     ARGUMENTS
       event: event-object created when user clicks on one of the filter elements.
