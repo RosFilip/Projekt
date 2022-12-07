@@ -32,13 +32,15 @@ function create_filter_element (data) {
   textContent = data.textContent
   parent = data.parent
 
-  const new_filter_element = document.createElement("li");
-  new_filter_element.classList.add(klass);
-  new_filter_element.textContent = `${textContent}`;
-  new_filter_element.addEventListener("click", (e)=>{
+  const dom = document.createElement("li");
+  dom.classList.add(klass);
+  dom.textContent = `${textContent}`;
+  dom.addEventListener("click", (e)=>{
     click_filter_element(event)
   })
-  parent.append(new_filter_element)
+  parent.append(dom)
+
+  return dom
 
   /*
     ARGUMENTS
@@ -156,7 +158,7 @@ function create_levels_filter () {
       textContent: level.name,
     }
     );
-    dom.dataset.id = level.id; // ?????
+    dom.dataset.id = level.id;
   }
   array_each(LEVELS, create_level);
 }
