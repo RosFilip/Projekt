@@ -107,11 +107,23 @@ function toggle_cities (event) {
 
 }
 
+// Kolla igenom uppgift nedan en gång till
 
 // WRITE SPECIFICATION
 // ATTENTION: You need to write the specification of all three functions:
 //            create_countries_cities_filters, create_country and create_city
+
 function create_countries_cities_filters () {
+    /*
+    ARGUMENTS
+      No argument used
+
+    SIDE-EFFECTS
+      creates div containers containing countries with each country having a unique country related ID. Each container is then filled with cities with matching countries id in their data.
+
+    NO RETURN VALUE
+
+  */
   function create_country (country) {
     const dom = document.createElement("div");
     dom.classList.add("country");
@@ -130,7 +142,24 @@ function create_countries_cities_filters () {
     }
 
     array_each(cities, create_city);
-  }
+  };
+      /*
+    ARGUMENTS
+      object containing country data
+
+    SIDE-EFFECTS
+      creates const dom, a "div" element containing a country with each country having a unique country related ID.
+      each country dom is added the two classes
+        - "country"
+        - "filter_container"
+      the dom is then added to the country_filter container
+      aswell as the country's name
+      an array ( "cities" ) of each city with matching country ID is then made using "array_filter"
+      with each city in "cities" is then place inside the country dom using the "create_city" function 
+
+    NO RETURN VALUE
+
+  */
   function create_city (city) {
 
     const dom = create_filter_element({
@@ -141,6 +170,22 @@ function create_countries_cities_filters () {
     dom.dataset.id = city.id;
 
   }
+        /*
+    ARGUMENTS
+      object containing city data
+
+    SIDE-EFFECTS
+      creates an li element using the "create_filter_element" function. 
+      Sets the needed relevant data of 
+        - parent
+        - class
+        - textContent
+
+      aswell as setting the ID as the unique city ID found in the city object
+
+    NO RETURN VALUE
+
+  */
 
   array_each(COUNTRIES, create_country);
 }
@@ -186,6 +231,7 @@ function create_language_filter () {
   }
   array_each(LANGUAGES, create_element);
 }
+
 
 
 // G / VG (see details in specification)
