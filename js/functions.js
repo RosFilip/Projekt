@@ -4,7 +4,8 @@
 // CODE According to specification
 function click_filter_element (event) {
   event.stopPropagation();
-  event.currentTarget.classList.toggle("selected");
+  event.currentTarget.classList.toggle("selected")
+
   /*
     ARGUMENTS
       event: event-object created when user clicks on one of the filter elements.
@@ -106,11 +107,12 @@ function toggle_cities (event) {
 
 }
 
-
 // WRITE SPECIFICATION
 // ATTENTION: You need to write the specification of all three functions:
 //            create_countries_cities_filters, create_country and create_city
+
 function create_countries_cities_filters () {
+
   function create_country (country) {
     const dom = document.createElement("div");
     dom.classList.add("country");
@@ -129,7 +131,8 @@ function create_countries_cities_filters () {
     }
 
     array_each(cities, create_city);
-  }
+  };
+
   function create_city (city) {
 
     const dom = create_filter_element({
@@ -140,6 +143,7 @@ function create_countries_cities_filters () {
     dom.dataset.id = city.id;
 
   }
+
 
   array_each(COUNTRIES, create_country);
 }
@@ -185,6 +189,7 @@ function create_language_filter () {
   }
   array_each(LANGUAGES, create_element);
 }
+
 
 
 // G / VG (see details in specification)
