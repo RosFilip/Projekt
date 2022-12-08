@@ -277,8 +277,31 @@ function create_filters(filter_type, DATA) {
 // G / VG (see details in specification)
 // CODE according to specifications
 function create_programme (programme) {
-  
   /*
+      {
+        "id": 0,
+        "entryGrades": [
+            6.78,
+            6.67,
+            6.55,
+            6.31,
+            6.22
+        ],
+        "exchangeStudents": 6,
+        "languageID": 1,
+        "levelID": 3,
+        "localStudents": 21,
+        "name": "Engineering and Sustainability",
+        "subjectID": 1,
+        "successRate": [
+            62,
+            58,
+            56,
+            54,
+            53
+        ],
+        "universityID": 0
+    },
 
     ARGUMENT
       programme (object): One of the objects from PROGRAMMES
@@ -297,7 +320,8 @@ function create_programme (programme) {
 
     NO RETURN VALUE
 
-  */  
+  */
+
 
 }
 
