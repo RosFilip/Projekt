@@ -196,6 +196,7 @@ function create_countries_cities_filters () {
 // ABSTRACT AND WRITE SPECIFICATION
 //    As you can see, all three functions below do basically the same thing.
 //    Abstract them to one function, and write the specification of that function.
+
 function create_levels_filter () {
   function create_level (level) {
     const dom = create_filter_element({
@@ -209,6 +210,7 @@ function create_levels_filter () {
   array_each(LEVELS, create_level);
 }
 // Create Subjects Filter
+
 function create_subjects_filter () {
   function create_subject (subject) {
     const dom = create_filter_element({
@@ -220,7 +222,9 @@ function create_subjects_filter () {
   }
   array_each(SUBJECTS, create_subject);
 }
+
 // Create Search Field
+
 function create_language_filter () {
   function create_element (data) {
     const dom = create_filter_element({
@@ -234,27 +238,34 @@ function create_language_filter () {
 }
 
 
-function create_programme_filters(array_category) {
-  let array_category_name = confirm_category;
-  function confirm_category() {
-    if (array_category === SUBJECTS) {
-      return "subject_filter"
-    } else if (array_category === LEVELS) {
-      return "level_filter"
-    } else if (array_category === LANGUAGES) {
-      return "language_filter"
-    };
-  };
+// Create filters abstracted 
 
-  function create_filter(filter_category) {
-    const dom = create_filter_element ({
-      parent: document.querySelector(`#${array_category_name} > ul`),
+function create_filters(filter_type, DATA) {
+  /*
+    ARGUMENTS
+      filter_type: Must be a string but not checked if true,
+      DATA: Should be an array containing objects of relevant information to the filter_type
+      the object must include the keys of:
+      "name" & "id"
+
+    SIDE-EFFECTS
+      creates an li element of each object in DATA using the "create_filter_element" function. 
+      the li is appended to the "filter_type" parent
+      the li textContent is set to the objects "name" key
+      and the li ID is set to the objects "id" key
+      
+    NO RETURN VALUE
+*/
+
+  function create_filter(data) {
+    const dom = create_filter_element({
+      parent: document.querySelector(`#${filter_type}_filter > ul`),
       class: "selected",
-      textContent: filter_category.name
+      textContent: data.name,
     });
-    dom.dataset.id = filter_category.id;
+    dom.dataset.id = data.id
   }
-  array_each(array_category, create_filter);
+  array_each(DATA, create_filter);
 }
 
 
