@@ -13,9 +13,12 @@
 */
 
 // Create Filter Elements
-create_levels_filter();
-create_subjects_filter();
-create_language_filter();
+// create_levels_filter("level");
+// create_subjects_filter("subject");
+// create_language_filter("language");
+create_filters("level", LEVELS)
+create_filters("subject", SUBJECTS)
+create_filters("language", LANGUAGES)
 create_countries_cities_filters();
 
 // Add Interaction of search field button
@@ -33,4 +36,3 @@ update_programmes();
 
 // VG
 // Add Interaction of button toggle-all-cities
-
