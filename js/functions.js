@@ -273,60 +273,47 @@ function create_filters(filter_type, DATA) {
 }
 
 
-
 // G / VG (see details in specification)
 // CODE according to specifications
 function create_programme (programme) {
 // programme constants
-      const programme_country = `${COUNTRIES[CITIES[UNIVERSITIES[programme.universityID].cityID].countryID]}`;
-      const programme_city = `${CITIES[UNIVERSITIES[programme.universityID].cityID]}`;
-      const programme_university = `${UNIVERSITIES[programme.universityID]}`;
-      const programme_level = `${LEVELS[programme.levelID]}`;
-      const programme_subject = `${SUBJECTS[programme.subjectID]}`;
-      const programme_languange = `${LANGUAGES[programme.languageID]}`
+      const programme_uniID = programme.universityID;
+      const programme_cityID = UNIVERSITIES[programme_uniID].cityID;
+      const programme_countryID = CITIES[programme_cityID].countryID;
+      const programe_levelID = programme.levelID - 1;
+      const programe_subjectID = programme.subjectID
+      const programe_languageID = programme.languageID
+
+      
+// Programme random background image
+      const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
+      const random_BG_ID = get_random_number(BGimg_amount, 0)
+      const programme_backgroundImage = COUNTRIES[programme_countryID].imagesNormal[random_BG_ID]
+
+
 // programme element & attributes
   let new_programme_dom = document.createElement("div");
   new_programme_dom.classList.add("programme");
-  new_programme_dom.setAttribute("id", `progamme#${programme.id}`);
+  new_programme_dom.setAttribute("id", `progamme${programme.id}`);
+
+
 // Programme inner html
   new_programme_dom.innerHTML = `
     <div class="top">
       <h2>${programme.name}</h2>
-      <p>>${programme_university.name}</p>
-      <p>>${programme_city.name}, ${programme_country.name}</p>
-      <p> ${programme_level.name}, ${programme_subject.name}, ${programme_languange.name}</p>
+      <p>>${UNIVERSITIES[programme_uniID].name}</p>
+      <p>>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
+      <p> ${LEVELS[programe_levelID].name}, ${SUBJECTS[programe_subjectID].name}, ${LANGUAGES[programe_languageID].name}</p>
     </div>
     <div class="more_info"></div>
-    <div class="bottom_programme">${programme_country.name}, sun-index: ${programme_city.sun}(83%)</div>`
-// Programme background-image
-  new_programme_dom.style.backgroundImage
+    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`
 
+
+// Programme background-image
+  new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
   document.querySelector("#programmes > ul").append(new_programme_dom);
 
-  /*
-          "id": 0,
-        "entryGrades": [
-            6.78,
-            6.67,
-            6.55,
-            6.31,
-            6.22
-        ],
-        "exchangeStudents": 6,
-        "languageID": 1,
-        "levelID": 3,
-        "localStudents": 21,
-        "name": "Engineering and Sustainability",
-        "subjectID": 1,
-        "successRate": [
-            62,
-            58,
-            56,
-            54,
-            53
-        ],
-        "universityID": 0
-    },
+/*
 
     ARGUMENT
       programme (object): One of the objects from PROGRAMMES
