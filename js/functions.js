@@ -297,7 +297,7 @@ function create_programme (programme) {
   new_programme_dom.setAttribute("id", `progamme${programme.id}`);
 
 
-// Programme inner html
+// Programme inner-HTML
   new_programme_dom.innerHTML = `
     <div class="top">
       <h2>${programme.name}</h2>
