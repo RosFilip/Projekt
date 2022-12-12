@@ -69,6 +69,7 @@ function create_filter_element (data) {
 // CODE according to specification
 function add_group_toggling (filter_container_dom) {
 
+
   /*
     ARGUMENT
       filter_container_dom: reference to a HTML-element that contains a set of fliter_elements
@@ -83,7 +84,7 @@ function add_group_toggling (filter_container_dom) {
     NO RETURN VALUE
 
   */
-  
+
 }
 
 
@@ -109,7 +110,7 @@ function toggle_cities (event) {
 
 // Kolla igenom uppgift nedan en gång till
 
-// WRITE SPECIFICATION
+// WRITE SPECIFICATION */
 // ATTENTION: You need to write the specification of all three functions:
 //            create_countries_cities_filters, create_country and create_city
 
@@ -242,7 +243,7 @@ function create_language_filter () {
 
 
 
-// Create filters abstracted 
+// Create filters abstracted  *
 
 function create_filters(filter_type, DATA) {
   /*
@@ -274,7 +275,7 @@ function create_filters(filter_type, DATA) {
 
 
 // G / VG (see details in specification)
-// CODE according to specifications
+// CODE according to specifications */
 function create_programme (programme) {
 // programme constants
       const programme_uniID = programme.universityID;
@@ -341,6 +342,7 @@ function create_programme (programme) {
 // G
 // CODE according to the specification
 function update_programmes () {
+
 
   /*
       NO ARGUMENTS
