@@ -69,6 +69,25 @@ function create_filter_element (data) {
 // CODE according to specification
 function add_group_toggling (filter_container_dom) {
 
+
+  filter_container_dom.addEventListener("click", ()=>{
+    const list_of_filters = filter_container_dom.querySelectorAll("li")
+    const list_of_selected_filters = filter_container_dom.querySelectorAll(".selected");
+    if (list_of_selected_filters.length === list_of_filters.length) {
+      list_of_filters.forEach(filter => {
+        filter.classList.remove("selected")
+      });
+    }  else if (list_of_selected_filters.length === 0) {
+      list_of_filters.forEach(filter => {
+        filter.classList.add("selected")
+      });
+    }  else if  (list_of_selected_filters[0].classList.contains("selected")) {
+      list_of_filters.forEach(filter => {
+        filter.classList.add("selected")
+      });
+    }
+  })
+
   /*
     ARGUMENT
       filter_container_dom: reference to a HTML-element that contains a set of fliter_elements
