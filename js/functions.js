@@ -102,10 +102,9 @@ function add_group_toggling (filter_container_dom) {
     NO RETURN VALUE
 
   */
- console.log(filter_container_dom);
   
 }
-add_group_toggling(document.querySelector(".filter_container"))
+
 
 
 // VG

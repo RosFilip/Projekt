@@ -32,7 +32,8 @@ update_programmes();
 // Add Interaction of filter containers (select-deselect all filters in the container)
 // Example: Click anywhere on the language-filter-container and all the language filters
 // (spanska, svenska, engelska, franska) will toggle.
-
+const filter_doms = document.querySelectorAll(".filter_container");
+array_each(filter_doms, add_group_toggling)
 
 // VG
 // Add Interaction of button toggle-all-cities
