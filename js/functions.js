@@ -306,13 +306,29 @@ function create_programme (programme) {
       <p>>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
       <p> ${LEVELS[programe_levelID].name}, ${SUBJECTS[programe_subjectID].name}, ${LANGUAGES[programe_languageID].name}</p>
     </div>
-    <div class="more_info"></div>
-    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`
+
+      
+      <div class="more_info">
+        <div class="extra_info">
+        fasfsfsafafsdfsf
+        </div>
+      </div>
+
+
+    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`;
+
+
+// Programme show more button
+  const showMoreButton = new_programme_dom.querySelector(".more_info");
+
+  
 
 
 // Programme background-image
   new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
   document.querySelector("#programmes > ul").append(new_programme_dom);
+
+
 
 /*
 

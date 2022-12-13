@@ -17,14 +17,12 @@
   display: flex;
   gap: calc(3 * var(--gap));
   flex-direction: column;
-
 }
 
 .programme > * {
   background-color: rgba(255,255,255,.8);
   border-radius: var(--border_radius);
   padding: calc(3 * var(--gap));
-
 }
 
 .more_info {
@@ -46,7 +44,7 @@
 .more_info .extra_info {
   display: none;
 }
-.programme.show_more .more_info .extra_info {
+.programme.show_more  .more_info > .extra_info {
   display: block;
 }
 
@@ -65,4 +63,3 @@
     --nCols: 2;
   }
 }
-
