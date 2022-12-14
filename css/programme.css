@@ -29,7 +29,7 @@
   align-self: flex-start;
   cursor: pointer;
 }
-.programme.show_more .more_info {
+.programme .show_more .more_info {
   align-self: auto;  
 }
 
@@ -37,14 +37,14 @@
   content: "show more";
   color: navy;
 }
-.programme.show_more .more_info::before {
+.programme .show_more .more_info::before {
   content: "show less";
 }
 
 .more_info .extra_info {
   display: none;
 }
-.programme.show_more  .more_info > .extra_info {
+.programme .show_more .more_info > .extra_info {
   display: block;
 }
 
@@ -63,3 +63,4 @@
     --nCols: 2;
   }
 }
+

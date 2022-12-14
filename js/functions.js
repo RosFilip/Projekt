@@ -302,24 +302,27 @@ function create_programme (programme) {
   new_programme_dom.innerHTML = `
     <div class="top">
       <h2>${programme.name}</h2>
-      <p>>${UNIVERSITIES[programme_uniID].name}</p>
-      <p>>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
+      <p>${UNIVERSITIES[programme_uniID].name}</p>
+      <p>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
       <p> ${LEVELS[programe_levelID].name}, ${SUBJECTS[programe_subjectID].name}, ${LANGUAGES[programe_languageID].name}</p>
     </div>
 
-      
-      <div class="more_info">
-        <div class="extra_info">
-        fasfsfsafafsdfsf
-        </div>
+
+      <div class="more_info show_more more_info_button">
+        <div class=""></div>
       </div>
+
 
 
     <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`;
 
 
 // Programme show more button
-  const showMoreButton = new_programme_dom.querySelector(".more_info");
+  const showMoreButton = new_programme_dom.querySelector(".more_info_button");
+  showMoreButton.addEventListener("click", ()=>{
+    showMoreButton.classList.toggle("more_info")
+    new_programme_dom.querySelector(".more_info_button > div").classList.toggle("more_info")
+  })
 
   
 
@@ -353,6 +356,7 @@ function create_programme (programme) {
 
 
 }
+const test = document.querySelector(".more_info");
 
 
 // G
@@ -375,6 +379,7 @@ function update_programmes () {
   */
 
 }
+
 
 
 // G
