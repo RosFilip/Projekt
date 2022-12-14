@@ -109,7 +109,18 @@ function add_group_toggling (filter_container_dom) {
 // VG
 // CODE according to specifications
 function toggle_cities (event) {
+  const madridFilterElement = document.querySelector("#country_0 > ul > li");
+  const nodeListOfCityFilters = document.querySelectorAll("#country_filter ul > div > ul > li")
 
+  if (madridFilterElement.classList.contains("selected")) {
+    nodeListOfCityFilters.forEach(cityFilter => {
+      cityFilter.classList.remove("selected")
+    });
+  } else {
+    nodeListOfCityFilters.forEach(cityFilter => {
+      cityFilter.classList.add("selected")
+  });
+  }
   /*
 
     ARGUMENTS
@@ -123,7 +134,6 @@ function toggle_cities (event) {
     NO RETURN VALUE
 
   */
-
 }
 
 // Kolla igenom uppgift nedan en gång till

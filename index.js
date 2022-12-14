@@ -37,3 +37,5 @@ array_each(filter_doms, add_group_toggling)
 
 // VG
 // Add Interaction of button toggle-all-cities
+const toggleCitiesButton = document.querySelector("#country_filter > button");
+toggleCitiesButton.addEventListener("click", toggle_cities)
