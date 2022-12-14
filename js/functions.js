@@ -5,6 +5,7 @@
 function click_filter_element (event) {
   event.stopPropagation();
   event.currentTarget.classList.toggle("selected")
+  update_programmes();
 
   /*
     ARGUMENTS
@@ -77,16 +78,22 @@ function add_group_toggling (filter_container_dom) {
       list_of_filters.forEach(filter => {
         filter.classList.remove("selected")
       });
+      update_programmes();
     }  else if (list_of_selected_filters.length === 0) {
       list_of_filters.forEach(filter => {
         filter.classList.add("selected")
       });
+      update_programmes();
     }  else if  (list_of_selected_filters[0].classList.contains("selected")) {
       list_of_filters.forEach(filter => {
         filter.classList.add("selected")
       });
+      update_programmes();
     }
+
+
   })
+
 
   /*
     ARGUMENT
@@ -395,7 +402,16 @@ function create_programme (programme) {
 // G
 // CODE according to the specification
 function update_programmes () {
+  const programmes_container = document.querySelector("#programmes")
 
+  const valid_programmes = read_filters();
+  if (valid_programmes.length === 0) {
+    programmes_container.innerHTML = `<p>Inga program uppfyller nuvarande filter.</p>`;
+  } else {
+    programmes_container.innerHTML = ``;
+    array_each(valid_programmes, create_programme)
+  }
+  console.log(valid_programmes);
 
   /*
       NO ARGUMENTS
@@ -423,7 +439,33 @@ function update_programmes () {
 // Optional VG: Which parts of the function's code could be abstracted?
 //              Implement it
 function read_filters () {
-  
+    /*
+      NO ARGUMENTS
+
+      SIDE EFFECTS
+        1.
+        Kollar igenom vilka städer är "selected", för stad som har klassen "selected" tar deras id:n och gör om de till siffror via "callback_add_cityID" mha parseInt
+
+        2.
+        Loopar igenom "UNIVERSITES" för varje stad som är selected och alla med universitet med matchande cityID pushas läggs i "universities"
+
+        3.
+        Samma sak som 2 fast den loopar igenom alla program som har matchande universityID
+
+        4.
+        Kollar alla "level filter" som är selected och pushar deras ID som siffror till en array och sedan sist så mha funktionen "array_each" går den igenom alla sparade programme från 3 och ser om programmetns level är included i de valda levels
+
+        5.
+        Upprepa samma steg som 4 fast för languange sedan subject och sist strängen från search programmes
+
+        6.
+        Sist så returneras "programmes" dvs alla program som uppfyller alla kraven
+
+        VG: The top images (header) need to be updated here
+
+      NO RETURN VALUE
+
+  */
   
   const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
 
@@ -456,6 +498,8 @@ function read_filters () {
     }
   }
   array_each(universities, callback_add_programmes);
+
+  // Dessa tre kan abstraheras
 
 
 
