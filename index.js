@@ -20,6 +20,7 @@ create_filters("level", LEVELS)
 create_filters("subject", SUBJECTS)
 create_filters("language", LANGUAGES)
 create_countries_cities_filters();
+create_programme(PROGRAMMES[0]);
 
 // Add Interaction of search field button
 document.querySelector("#search_field button").addEventListener("click", update_programmes);

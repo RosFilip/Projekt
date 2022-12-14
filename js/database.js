@@ -12784,4 +12784,3 @@ const LEVELS = [
         "name": "PhD Course"
     }
 ];
-
