@@ -285,6 +285,10 @@ function create_programme (programme) {
       const programe_subjectID = programme.subjectID
       const programe_languageID = programme.languageID
 
+      const average_programme_grade = array_average(programme.entryGrades);
+      const programme_Success_rate = array_average(programme.successRate)
+      const exchange_ratio = `${programme.exchangeStudents}/${programme.localStudents}`;
+
       
 // Programme random background image
       const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
@@ -308,8 +312,12 @@ function create_programme (programme) {
     </div>
 
 
-      <div class="more_info show_more more_info_button">
-        <div class=""></div>
+      <div class="more_info">
+       <div class="extra_info">
+        <p>Average entry grade: ${average_programme_grade}</p>
+        <p>Success rate: ${programme_Success_rate}%</p>
+        <p>Exchange ratio: ${exchange_ratio}</p>
+       </div>
       </div>
 
 
@@ -317,12 +325,12 @@ function create_programme (programme) {
     <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`;
 
 
-// Programme show more button
-  const showMoreButton = new_programme_dom.querySelector(".more_info_button");
-  showMoreButton.addEventListener("click", ()=>{
-    showMoreButton.classList.toggle("more_info")
-    new_programme_dom.querySelector(".more_info_button > div").classList.toggle("more_info")
-  })
+// Programme show more button & content
+    const showMoreButton = new_programme_dom.querySelector(".more_info");
+    showMoreButton.addEventListener("click", ()=>{
+      new_programme_dom.classList.toggle("show_more")
+    });
+
 
   
 
