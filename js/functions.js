@@ -313,12 +313,13 @@ function create_programme (programme) {
       const programe_subjectID = programme.subjectID
       const programe_languageID = programme.languageID
 
+      // Programme "show more" constants
       const average_programme_grade = array_average(programme.entryGrades);
       const programme_Success_rate = array_average(programme.successRate)
       const exchange_ratio = `${programme.exchangeStudents}/${programme.localStudents}`;
 
       
-// Programme random background image
+      // Programme random background image
       const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
       const random_BG_ID = get_random_number(BGimg_amount, 0)
       const programme_backgroundImage = COUNTRIES[programme_countryID].imagesNormal[random_BG_ID]
@@ -360,9 +361,6 @@ function create_programme (programme) {
     });
 
 
-  
-
-
 // Programme background-image
   new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
   document.querySelector("#programmes > ul").append(new_programme_dom);
@@ -392,7 +390,6 @@ function create_programme (programme) {
 
 
 }
-const test = document.querySelector(".more_info");
 
 
 // G
@@ -426,6 +423,7 @@ function update_programmes () {
 // Optional VG: Which parts of the function's code could be abstracted?
 //              Implement it
 function read_filters () {
+  
   
   const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
 

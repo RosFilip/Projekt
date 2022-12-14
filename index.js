@@ -26,7 +26,7 @@ create_programme(PROGRAMMES[0]);
 document.querySelector("#search_field button").addEventListener("click", update_programmes);
 
 // Initialise programmes list by calling relevant function
-update_programmes();
+
 
 
 // VG
