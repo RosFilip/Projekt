@@ -320,6 +320,7 @@ function create_programme (programme) {
       const programe_levelID = programme.levelID - 1;
       const programe_subjectID = programme.subjectID
       const programe_languageID = programme.languageID
+      const programme_sun_index = CITIES[programme_cityID].sun
 
       // Programme "show more" constants
       const average_programme_grade = array_average(programme.entryGrades);
@@ -359,7 +360,7 @@ function create_programme (programme) {
 
 
 
-    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`;
+    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${programme_sun_index}(83%)</div>`;
 
 
 // Programme show more button & content
@@ -416,6 +417,18 @@ function update_programmes () {
   } else if (valid_programmes.length === 0) {
     programme_p.textContent = "Inga program uppfyller nuvarande filter."
 
+  }
+
+  // Update top images
+
+
+  const header_images = document.querySelectorAll("#top_images > div");
+
+  for (let i = 0; i < header_images.length; i++) {
+    const random_city_images = CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].imagesNormal
+    const random_image_from_city = random_city_images[get_random_number(random_city_images.length - 1, 0)]
+    console.log(random_image_from_city);
+    header_images[i].style.backgroundImage = `url(/media/geo_images/${random_image_from_city})`
   }
 
   /*
