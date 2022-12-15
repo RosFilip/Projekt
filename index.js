@@ -1,7 +1,6 @@
 "use strict";
 
 
-
 /*
 
   Notice the images on the page header.
@@ -16,17 +15,17 @@
 // create_levels_filter("level");
 // create_subjects_filter("subject");
 // create_language_filter("language");
-create_filters("level", LEVELS)
-create_filters("subject", SUBJECTS)
-create_filters("language", LANGUAGES)
+create_filters("level", LEVELS);
+create_filters("subject", SUBJECTS);
+create_filters("language", LANGUAGES);
 create_countries_cities_filters();
-create_programme(PROGRAMMES[0]);
+
 
 // Add Interaction of search field button
 document.querySelector("#search_field button").addEventListener("click", update_programmes);
 
 // Initialise programmes list by calling relevant function
-
+update_programmes();
 
 
 // VG
