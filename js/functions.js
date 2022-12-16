@@ -321,6 +321,7 @@ function create_programme (programme) {
       const programe_subjectID = programme.subjectID
       const programe_languageID = programme.languageID
       const programme_sun_index = CITIES[programme_cityID].sun
+      const programme_sun_percentage = percenter(CITIES[programme_cityID].sun, 365)
 
       // Programme "show more" constants
       const average_programme_grade = array_average(programme.entryGrades);
@@ -360,7 +361,7 @@ function create_programme (programme) {
 
 
 
-    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${programme_sun_index}(83%)</div>`;
+    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${programme_sun_index}(${programme_sun_percentage}%)</div>`;
 
 
 // Programme show more button & content
