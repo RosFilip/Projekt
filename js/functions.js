@@ -274,10 +274,6 @@ function create_language_filter () {
   array_each(LANGUAGES, create_element);
 }
 
-  
-
-
-
 
 // Create filters abstracted  *
 
