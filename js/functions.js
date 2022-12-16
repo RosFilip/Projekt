@@ -512,8 +512,6 @@ function read_filters () {
   }
   array_each(universities, callback_add_programmes);
 
-  // Dessa tre kan abstraheras
-
 
 
   const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
@@ -537,6 +535,7 @@ function read_filters () {
     const id_as_integer = parseInt(dom_element.dataset.id);
     language_id_selected.push(id_as_integer);
   }
+
   array_each(language_selected_dom, callback_add_languageID);
 
 
@@ -547,6 +546,8 @@ function read_filters () {
   programmes = array_filter(programmes, test_function_language);
 
 
+
+  //
 
   const subject_selected_dom = document.querySelectorAll("#subject_filter li.selected");
   const subject_id_selected = [];
@@ -563,7 +564,30 @@ function read_filters () {
   }
   programmes = array_filter(programmes, test_function_subject);
 
+  //
 
+    function filter_programme(filter_type) {
+     // ett argument: 
+      const selected_dom = document.querySelectorAll(`#${filter_type}_filter li.selected`);
+     //
+      const id_selected = [];
+      function callback_add_ID (dom_element) {
+        const id_as_integer = parseInt(dom_element.dataset.id);
+        id_selected.push(id_as_integer);
+      }
+      array_each(selected_dom, callback_add_ID);
+    
+    
+    
+      function test_function_subject (programme) {
+        return id_selected.includes(programme.subjectID);
+      }
+      return programmes = array_filter(programmes, test_function_subject);
+    }
+
+
+
+  //
 
   const search_string = document.querySelector("#search_field input").value;
   if (search_string !== "") {
