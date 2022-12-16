@@ -420,8 +420,6 @@ function update_programmes () {
   }
 
   // Update top images
-
-
   const header_images = document.querySelectorAll("#top_images > div");
 
   for (let i = 0; i < header_images.length; i++) {
