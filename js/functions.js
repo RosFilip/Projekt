@@ -513,8 +513,6 @@ function read_filters () {
   }
   array_each(universities, callback_add_programmes);
 
-  // Dessa tre kan abstraheras
-
 
 
   const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
