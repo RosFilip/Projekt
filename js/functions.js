@@ -512,61 +512,26 @@ function read_filters () {
   }
   array_each(universities, callback_add_programmes);
 
+  
+  programmes = filter_programmes_by_type("level", programmes);
+  programmes = filter_programmes_by_type("language", programmes);
+  programmes = filter_programmes_by_type("subject", programmes);
 
-
-  const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
-  const level_id_selected = [];
-  function callback_add_levelID (dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
-    level_id_selected.push(id_as_integer);
-  }
-  array_each(level_selected_dom, callback_add_levelID);
-
-  function test_function_level (programme) {
-    return level_id_selected.includes(programme.levelID);
-  }
-  programmes = array_filter(programmes, test_function_level);
-
-
-
-  const language_selected_dom = document.querySelectorAll("#language_filter li.selected");
-  const language_id_selected = [];
-  function callback_add_languageID (dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
-    language_id_selected.push(id_as_integer);
-  }
-
-  array_each(language_selected_dom, callback_add_languageID);
-
-
-
-  function test_function_language (programme) {
-    return language_id_selected.includes(programme.languageID);
-  }
-  programmes = array_filter(programmes, test_function_language);
-
-
-
-  //
-
-  const subject_selected_dom = document.querySelectorAll("#subject_filter li.selected");
-  const subject_id_selected = [];
-  function callback_add_subjectID (dom_element) {
-    const id_as_integer = parseInt(dom_element.dataset.id);
-    subject_id_selected.push(id_as_integer);
-  }
-  array_each(subject_selected_dom, callback_add_subjectID);
-
-
-
-  function test_function_subject (programme) {
-    return subject_id_selected.includes(programme.subjectID);
-  }
-  programmes = array_filter(programmes, test_function_subject);
-
-  //
-
-    function filter_programme(filter_type) {
+  // Abstraction
+  function filter_programmes_by_type(filter_type, programmes) {
+      if (filter_type === "subject") {
+        test_function = function test_function_subject (programme) {
+          return id_selected.includes(programme.subjectID);
+        }
+      } else if (filter_type === "language") {
+        test_function = function test_function_language (programme) {
+          return id_selected.includes(programme.languageID);
+        }
+      } else if (filter_type === "level") {
+        test_function = function test_function_level (programme) {
+          return id_selected.includes(programme.levelID);
+        }
+      }
      // ett argument: 
       const selected_dom = document.querySelectorAll(`#${filter_type}_filter li.selected`);
      //
@@ -579,15 +544,10 @@ function read_filters () {
     
     
     
-      function test_function_subject (programme) {
-        return id_selected.includes(programme.subjectID);
-      }
-      return programmes = array_filter(programmes, test_function_subject);
-    }
 
+      return programmes = array_filter(programmes, test_function);
+  }
 
-
-  //
 
   const search_string = document.querySelector("#search_field input").value;
   if (search_string !== "") {
