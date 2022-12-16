@@ -5,6 +5,7 @@
 function click_filter_element (event) {
   event.stopPropagation();
   event.currentTarget.classList.toggle("selected")
+  update_programmes();
 
   /*
     ARGUMENTS
@@ -77,16 +78,22 @@ function add_group_toggling (filter_container_dom) {
       list_of_filters.forEach(filter => {
         filter.classList.remove("selected")
       });
+      update_programmes();
     }  else if (list_of_selected_filters.length === 0) {
       list_of_filters.forEach(filter => {
         filter.classList.add("selected")
       });
+      update_programmes();
     }  else if  (list_of_selected_filters[0].classList.contains("selected")) {
       list_of_filters.forEach(filter => {
         filter.classList.add("selected")
       });
+      update_programmes();
     }
+
+
   })
+
 
   /*
     ARGUMENT
@@ -121,6 +128,7 @@ function toggle_cities (event) {
       cityFilter.classList.add("selected")
   });
   }
+  update_programmes();
   /*
 
     ARGUMENTS
@@ -312,6 +320,7 @@ function create_programme (programme) {
       const programe_levelID = programme.levelID - 1;
       const programe_subjectID = programme.subjectID
       const programe_languageID = programme.languageID
+      const programme_sun_index = CITIES[programme_cityID].sun
 
       // Programme "show more" constants
       const average_programme_grade = array_average(programme.entryGrades);
@@ -351,7 +360,7 @@ function create_programme (programme) {
 
 
 
-    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`;
+    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${programme_sun_index}(83%)</div>`;
 
 
 // Programme show more button & content
@@ -395,7 +404,30 @@ function create_programme (programme) {
 // G
 // CODE according to the specification
 function update_programmes () {
+  const programmes_container = document.querySelector("#programmes")
+  const programme_p = programmes_container.querySelector("p")
+  const programme_list = programmes_container.querySelector("ul")
+  programme_list.innerHTML = "";
 
+  const valid_programmes = read_filters();
+  console.log(valid_programmes.length);
+  if (valid_programmes.length > 0) {
+    programme_p.textContent = ""
+    array_each(valid_programmes, create_programme)
+  } else if (valid_programmes.length === 0) {
+    programme_p.textContent = "Inga program uppfyller nuvarande filter."
+
+  }
+
+  // Update top images
+  const header_images = document.querySelectorAll("#top_images > div");
+
+  for (let i = 0; i < header_images.length; i++) {
+    const random_city_images = CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].imagesNormal
+    const random_image_from_city = random_city_images[get_random_number(random_city_images.length - 1, 0)]
+    console.log(random_image_from_city);
+    header_images[i].style.backgroundImage = `url(/media/geo_images/${random_image_from_city})`
+  }
 
   /*
       NO ARGUMENTS
@@ -415,6 +447,7 @@ function update_programmes () {
 
 
 
+
 // G
 // WRITE SPECIFICATION
 // You must understand how this function works. There will be questions about it
@@ -423,7 +456,33 @@ function update_programmes () {
 // Optional VG: Which parts of the function's code could be abstracted?
 //              Implement it
 function read_filters () {
-  
+    /*
+      NO ARGUMENTS
+
+      SIDE EFFECTS
+        1.
+        Kollar igenom vilka städer är "selected", för stad som har klassen "selected" tar deras id:n och gör om de till siffror via "callback_add_cityID" mha parseInt
+
+        2.
+        Loopar igenom "UNIVERSITES" för varje stad som är selected och alla med universitet med matchande cityID pushas läggs i "universities"
+
+        3.
+        Samma sak som 2 fast den loopar igenom alla program som har matchande universityID
+
+        4.
+        Kollar alla "level filter" som är selected och pushar deras ID som siffror till en array och sedan sist så mha funktionen "array_each" går den igenom alla sparade programme från 3 och ser om programmetns level är included i de valda levels
+
+        5.
+        Upprepa samma steg som 4 fast för languange sedan subject och sist strängen från search programmes
+
+        6.
+        Sist så returneras "programmes" dvs alla program som uppfyller alla kraven
+
+        VG: The top images (header) need to be updated here
+
+      NO RETURN VALUE
+
+  */
   
   const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
 
@@ -456,6 +515,8 @@ function read_filters () {
     }
   }
   array_each(universities, callback_add_programmes);
+
+  // Dessa tre kan abstraheras
 
 
 
