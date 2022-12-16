@@ -513,8 +513,43 @@ function read_filters () {
   }
   array_each(universities, callback_add_programmes);
 
+  programmes = filter_programmes_by_type("level", programmes);
+  programmes = filter_programmes_by_type("language", programmes);
+  programmes = filter_programmes_by_type("subject", programmes);
+
+  // Abstraction
+  function filter_programmes_by_type(filter_type, programmes) {
+      if (filter_type === "subject") {
+        test_function = function test_function_subject (programme) {
+          return id_selected.includes(programme.subjectID);
+        }
+      } else if (filter_type === "language") {
+        test_function = function test_function_language (programme) {
+          return id_selected.includes(programme.languageID);
+        }
+      } else if (filter_type === "level") {
+        test_function = function test_function_level (programme) {
+          return id_selected.includes(programme.levelID);
+        }
+      }
+     // ett argument: 
+      const selected_dom = document.querySelectorAll(`#${filter_type}_filter li.selected`);
+     //
+      const id_selected = [];
+      function callback_add_ID (dom_element) {
+        const id_as_integer = parseInt(dom_element.dataset.id);
+        id_selected.push(id_as_integer);
+      }
+      array_each(selected_dom, callback_add_ID);
+    
+    
+    
+
+      return programmes = array_filter(programmes, test_function);
+  }
 
 
+/*
   const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
   const level_id_selected = [];
   function callback_add_levelID (dom_element) {
@@ -561,7 +596,7 @@ function read_filters () {
     return subject_id_selected.includes(programme.subjectID);
   }
   programmes = array_filter(programmes, test_function_subject);
-
+*/
 
 
   const search_string = document.querySelector("#search_field input").value;
