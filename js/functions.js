@@ -156,7 +156,9 @@ function create_countries_cities_filters () {
       No argument used
 
     SIDE-EFFECTS
-      creates div containers containing countries with each country having a unique country related ID. Each container is then filled with cities with matching countries id in their data.
+      creates "div" element containers containing countries with each country having a unique country 
+      related ID. Each container is then filled with the name of the country aswell as 
+      cities with matching countries id in their data.
 
     NO RETURN VALUE
 
@@ -185,7 +187,8 @@ function create_countries_cities_filters () {
       object containing country data
 
     SIDE-EFFECTS
-      creates const dom, a "div" element containing a country with each country having a unique country related ID.
+      creates const dom, a "div" element containing a country with each country having a unique 
+      country related ID.
       each country dom is added the two classes
         - "country"
         - "filter_container"
@@ -212,11 +215,11 @@ function create_countries_cities_filters () {
       object containing city data
 
     SIDE-EFFECTS
-      creates an li element using the "create_filter_element" function. 
+      creates an "li" element using the "create_filter_element" function. 
       Sets the needed relevant data of 
-        - parent
-        - class
-        - textContent
+        - parent (countryID)
+        - class  ("selected")
+        - textContent (name of the city)
 
       aswell as setting the ID as the unique city ID found in the city object
 
@@ -280,16 +283,18 @@ function create_language_filter () {
 function create_filters(filter_type, DATA) {
   /*
     ARGUMENTS
-      filter_type: Must be a string but not checked if true,
+      filter_type: The filter type is the name of the category which the filter should represent.
+      Must be a string but not checked if true,
       DATA: Should be an array containing objects of relevant information to the filter_type
       the object must include the keys of:
       "name" & "id"
 
     SIDE-EFFECTS
-      creates an li element of each object in DATA using the "create_filter_element" function. 
+      creates an li element for each object in DATA using the "create_filter_element" function,
+      inside of the "create_filter" function.
       the li is appended to the "filter_type" parent
       the li textContent is set to the objects "name" key
-      and the li ID is set to the objects "id" key
+      and the li dataset ID is set to the objects "id" key
       
     NO RETURN VALUE
 */
@@ -309,7 +314,7 @@ function create_filters(filter_type, DATA) {
 // G / VG (see details in specification)
 // CODE according to specifications */
 function create_programme (programme) {
-// programme constants
+      // programme constants: for programme information
       const programme_uniID = programme.universityID;
       const programme_cityID = UNIVERSITIES[programme_uniID].cityID;
       const programme_countryID = CITIES[programme_cityID].countryID;
@@ -319,25 +324,25 @@ function create_programme (programme) {
       const programme_sun_index = CITIES[programme_cityID].sun
       const programme_sun_percentage = percenter(CITIES[programme_cityID].sun, 365)
 
-      // Programme "show more" constants
+      // Programme constants: for "show more" button
       const average_programme_grade = array_average(programme.entryGrades);
       const programme_Success_rate = array_average(programme.successRate)
       const exchange_ratio = `${programme.exchangeStudents}/${programme.localStudents}`;
 
       
-      // Programme random background image
+      // Programme constants: for a random background image
       const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
       const random_BG_ID = get_random_number(BGimg_amount, 0)
       const programme_backgroundImage = COUNTRIES[programme_countryID].imagesNormal[random_BG_ID]
 
 
-// programme element & attributes
+  // programme create element & set attributes
   let new_programme_dom = document.createElement("div");
   new_programme_dom.classList.add("programme");
   new_programme_dom.setAttribute("id", `progamme${programme.id}`);
 
 
-// Programme inner-HTML
+  // Programme inner-HTML
   new_programme_dom.innerHTML = `
     <div class="top">
       <h2>${programme.name}</h2>
@@ -360,14 +365,14 @@ function create_programme (programme) {
     <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${programme_sun_index}(${programme_sun_percentage}%)</div>`;
 
 
-// Programme show more button & content
+  // Programme show more button & content
     const showMoreButton = new_programme_dom.querySelector(".more_info");
     showMoreButton.addEventListener("click", ()=>{
       new_programme_dom.classList.toggle("show_more")
     });
 
 
-// Programme background-image
+  // Programme setting background-image
   new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
   document.querySelector("#programmes > ul").append(new_programme_dom);
 
@@ -457,6 +462,9 @@ function read_filters () {
       NO ARGUMENTS
 
       SIDE EFFECTS
+      
+
+
         1.
         Kollar igenom vilka städer är "selected", för stad som har klassen "selected" tar deras id:n och gör om de till siffror via "callback_add_cityID" mha parseInt
 
