@@ -528,9 +528,8 @@ function read_filters () {
           return id_selected.includes(programme.levelID);
         }
       }
-     // ett argument: 
+
       const selected_dom = document.querySelectorAll(`#${filter_type}_filter li.selected`);
-     //
       const id_selected = [];
       function callback_add_ID (dom_element) {
         const id_as_integer = parseInt(dom_element.dataset.id);
