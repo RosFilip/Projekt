@@ -462,30 +462,17 @@ function read_filters () {
       NO ARGUMENTS
 
       SIDE EFFECTS
-      
-
-
-        1.
-        Kollar igenom vilka städer är "selected", för stad som har klassen "selected" tar deras id:n och gör om de till siffror via "callback_add_cityID" mha parseInt
-
-        2.
-        Loopar igenom "UNIVERSITES" för varje stad som är selected och alla med universitet med matchande cityID pushas läggs i "universities"
-
-        3.
-        Samma sak som 2 fast den loopar igenom alla program som har matchande universityID
-
-        4.
-        Kollar alla "level filter" som är selected och pushar deras ID som siffror till en array och sedan sist så mha funktionen "array_each" går den igenom alla sparade programme från 3 och ser om programmetns level är included i de valda levels
-
-        5.
-        Upprepa samma steg som 4 fast för languange sedan subject och sist strängen från search programmes
-
-        6.
-        Sist så returneras "programmes" dvs alla program som uppfyller alla kraven
-
-        VG: The top images (header) need to be updated here
+        This function checks which filters are being used/are selected
+        It filters it in order of:
+          cities -> Universities in selected cities -> programmes in selected universites -> level/language/subject;
+        Last the functions checks if the search string is NOT empty
+          If the search field is NOT empty:
+            The programmes are filtered and all programmes with matching words in their name are passed
+          If the search field IS empty:
+            This part of the function is ignored
 
       NO RETURN VALUE
+      Returns an array of all programmes that match the selected filters.
 
   */
   
@@ -521,6 +508,7 @@ function read_filters () {
   }
   array_each(universities, callback_add_programmes);
 
+  
   programmes = filter_programmes_by_type("level", programmes);
   programmes = filter_programmes_by_type("language", programmes);
   programmes = filter_programmes_by_type("subject", programmes);
