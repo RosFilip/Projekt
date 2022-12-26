@@ -78,22 +78,6 @@ function add_group_toggling (filter_container_dom) {
       list_of_filters.forEach(filter => {
         filter.classList.remove("selected")
       });
-      update_programmes();
-    }  else if (list_of_selected_filters.length === 0) {
-      list_of_filters.forEach(filter => {
-        filter.classList.add("selected")
-      });
-      update_programmes();
-    }  else if  (list_of_selected_filters[0].classList.contains("selected")) {
-      list_of_filters.forEach(filter => {
-        filter.classList.add("selected")
-      });
-      update_programmes();
-    }
-
-
-  })
-
 
   /*
     ARGUMENT
@@ -111,6 +95,7 @@ function add_group_toggling (filter_container_dom) {
   */
 
 }
+
 
 
 // VG
