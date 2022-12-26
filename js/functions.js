@@ -371,7 +371,7 @@ function create_programme (programme) {
 
 
   // Programme setting background-image
-  new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
+  new_programme_dom.style.backgroundImage = `url(./media/geo_images/${programme_backgroundImage})`
   document.querySelector("#programmes > ul").append(new_programme_dom);
 
 
