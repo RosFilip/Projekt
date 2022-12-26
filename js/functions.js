@@ -426,7 +426,7 @@ function update_programmes () {
     const random_city_images = CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].imagesNormal
     const random_image_from_city = random_city_images[get_random_number(random_city_images.length - 1, 0)]
     console.log(random_image_from_city);
-    header_images[i].style.backgroundImage = `url(/media/geo_images/${random_image_from_city})`
+    header_images[i].style.backgroundImage = `url(./media/geo_images/${random_image_from_city})`
   }
 
   /*
