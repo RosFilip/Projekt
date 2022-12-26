@@ -249,8 +249,8 @@ function create_levels_filter () {
   }
   array_each(LEVELS, create_level);
 }
-// Create Subjects Filter
 
+// Create Subjects Filter
 function create_subjects_filter () {
   function create_subject (subject) {
     const dom = create_filter_element({
@@ -264,7 +264,6 @@ function create_subjects_filter () {
 }
 
 // Create Search Field
-
 function create_language_filter () {
   function create_element (data) {
     const dom = create_filter_element({
@@ -278,8 +277,7 @@ function create_language_filter () {
 }
 
 
-// Create filters abstracted  *
-
+// Create filters abstracted 
 function create_filters(filter_type, DATA) {
   /*
     ARGUMENTS
