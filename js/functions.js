@@ -5,6 +5,7 @@
 function click_filter_element (event) {
   event.stopPropagation();
   event.currentTarget.classList.toggle("selected")
+  update_programmes();
 
   /*
     ARGUMENTS
@@ -77,16 +78,6 @@ function add_group_toggling (filter_container_dom) {
       list_of_filters.forEach(filter => {
         filter.classList.remove("selected")
       });
-    }  else if (list_of_selected_filters.length === 0) {
-      list_of_filters.forEach(filter => {
-        filter.classList.add("selected")
-      });
-    }  else if  (list_of_selected_filters[0].classList.contains("selected")) {
-      list_of_filters.forEach(filter => {
-        filter.classList.add("selected")
-      });
-    }
-  })
 
   /*
     ARGUMENT
@@ -102,7 +93,7 @@ function add_group_toggling (filter_container_dom) {
     NO RETURN VALUE
 
   */
-  
+
 }
 
 
@@ -110,7 +101,19 @@ function add_group_toggling (filter_container_dom) {
 // VG
 // CODE according to specifications
 function toggle_cities (event) {
+  const madridFilterElement = document.querySelector("#country_0 > ul > li");
+  const nodeListOfCityFilters = document.querySelectorAll("#country_filter ul > div > ul > li")
 
+  if (madridFilterElement.classList.contains("selected")) {
+    nodeListOfCityFilters.forEach(cityFilter => {
+      cityFilter.classList.remove("selected")
+    });
+  } else {
+    nodeListOfCityFilters.forEach(cityFilter => {
+      cityFilter.classList.add("selected")
+  });
+  }
+  update_programmes();
   /*
 
     ARGUMENTS
@@ -124,12 +127,11 @@ function toggle_cities (event) {
     NO RETURN VALUE
 
   */
-
 }
 
 // Kolla igenom uppgift nedan en gång till
 
-// WRITE SPECIFICATION
+// WRITE SPECIFICATION */
 // ATTENTION: You need to write the specification of all three functions:
 //            create_countries_cities_filters, create_country and create_city
 
@@ -139,7 +141,9 @@ function create_countries_cities_filters () {
       No argument used
 
     SIDE-EFFECTS
-      creates div containers containing countries with each country having a unique country related ID. Each container is then filled with cities with matching countries id in their data.
+      creates "div" element containers containing countries with each country having a unique country 
+      related ID. Each container is then filled with the name of the country aswell as 
+      cities with matching countries id in their data.
 
     NO RETURN VALUE
 
@@ -168,7 +172,8 @@ function create_countries_cities_filters () {
       object containing country data
 
     SIDE-EFFECTS
-      creates const dom, a "div" element containing a country with each country having a unique country related ID.
+      creates const dom, a "div" element containing a country with each country having a unique 
+      country related ID.
       each country dom is added the two classes
         - "country"
         - "filter_container"
@@ -195,11 +200,11 @@ function create_countries_cities_filters () {
       object containing city data
 
     SIDE-EFFECTS
-      creates an li element using the "create_filter_element" function. 
+      creates an "li" element using the "create_filter_element" function. 
       Sets the needed relevant data of 
-        - parent
-        - class
-        - textContent
+        - parent (countryID)
+        - class  ("selected")
+        - textContent (name of the city)
 
       aswell as setting the ID as the unique city ID found in the city object
 
@@ -257,26 +262,24 @@ function create_language_filter () {
   array_each(LANGUAGES, create_element);
 }
 
-  
 
-
-
-
-// Create filters abstracted 
+// Create filters abstracted  *
 
 function create_filters(filter_type, DATA) {
   /*
     ARGUMENTS
-      filter_type: Must be a string but not checked if true,
+      filter_type: The filter type is the name of the category which the filter should represent.
+      Must be a string but not checked if true,
       DATA: Should be an array containing objects of relevant information to the filter_type
       the object must include the keys of:
       "name" & "id"
 
     SIDE-EFFECTS
-      creates an li element of each object in DATA using the "create_filter_element" function. 
+      creates an li element for each object in DATA using the "create_filter_element" function,
+      inside of the "create_filter" function.
       the li is appended to the "filter_type" parent
       the li textContent is set to the objects "name" key
-      and the li ID is set to the objects "id" key
+      and the li dataset ID is set to the objects "id" key
       
     NO RETURN VALUE
 */
@@ -293,12 +296,74 @@ function create_filters(filter_type, DATA) {
 }
 
 
-
 // G / VG (see details in specification)
-// CODE according to specifications
+// CODE according to specifications */
 function create_programme (programme) {
-  
-  /*
+      // programme constants: for programme information
+      const programme_uniID = programme.universityID;
+      const programme_cityID = UNIVERSITIES[programme_uniID].cityID;
+      const programme_countryID = CITIES[programme_cityID].countryID;
+      const programe_levelID = programme.levelID - 1;
+      const programe_subjectID = programme.subjectID
+      const programe_languageID = programme.languageID
+      const programme_sun_index = CITIES[programme_cityID].sun
+      const programme_sun_percentage = percenter(CITIES[programme_cityID].sun, 365)
+
+      // Programme constants: for "show more" button
+      const average_programme_grade = array_average(programme.entryGrades);
+      const programme_Success_rate = array_average(programme.successRate)
+      const exchange_ratio = `${programme.exchangeStudents}/${programme.localStudents}`;
+
+      
+      // Programme constants: for a random background image
+      const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
+      const random_BG_ID = get_random_number(BGimg_amount, 0)
+      const programme_backgroundImage = COUNTRIES[programme_countryID].imagesNormal[random_BG_ID]
+
+
+  // programme create element & set attributes
+  let new_programme_dom = document.createElement("div");
+  new_programme_dom.classList.add("programme");
+  new_programme_dom.setAttribute("id", `progamme${programme.id}`);
+
+
+  // Programme inner-HTML
+  new_programme_dom.innerHTML = `
+    <div class="top">
+      <h2>${programme.name}</h2>
+      <p>${UNIVERSITIES[programme_uniID].name}</p>
+      <p>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
+      <p> ${LEVELS[programe_levelID].name}, ${SUBJECTS[programe_subjectID].name}, ${LANGUAGES[programe_languageID].name}</p>
+    </div>
+
+
+      <div class="more_info">
+       <div class="extra_info">
+        <p>Average entry grade: ${average_programme_grade}</p>
+        <p>Success rate: ${programme_Success_rate}%</p>
+        <p>Exchange ratio: ${exchange_ratio}</p>
+       </div>
+      </div>
+
+
+
+    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${programme_sun_index}(${programme_sun_percentage}%)</div>`;
+
+
+  // Programme show more button & content
+    const showMoreButton = new_programme_dom.querySelector(".more_info");
+    showMoreButton.addEventListener("click", ()=>{
+      new_programme_dom.classList.toggle("show_more")
+    });
+
+
+  // Programme setting background-image
+  new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
+  document.querySelector("#programmes > ul").append(new_programme_dom);
+
+
+
+/*
 
     ARGUMENT
       programme (object): One of the objects from PROGRAMMES
@@ -317,7 +382,8 @@ function create_programme (programme) {
 
     NO RETURN VALUE
 
-  */  
+  */
+
 
 }
 
@@ -325,6 +391,30 @@ function create_programme (programme) {
 // G
 // CODE according to the specification
 function update_programmes () {
+  const programmes_container = document.querySelector("#programmes")
+  const programme_p = programmes_container.querySelector("p")
+  const programme_list = programmes_container.querySelector("ul")
+  programme_list.innerHTML = "";
+
+  const valid_programmes = read_filters();
+  console.log(valid_programmes.length);
+  if (valid_programmes.length > 0) {
+    programme_p.textContent = ""
+    array_each(valid_programmes, create_programme)
+  } else if (valid_programmes.length === 0) {
+    programme_p.textContent = "Inga program uppfyller nuvarande filter."
+
+  }
+
+  // Update top images
+  const header_images = document.querySelectorAll("#top_images > div");
+
+  for (let i = 0; i < header_images.length; i++) {
+    const random_city_images = CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].imagesNormal
+    const random_image_from_city = random_city_images[get_random_number(random_city_images.length - 1, 0)]
+    console.log(random_image_from_city);
+    header_images[i].style.backgroundImage = `url(/media/geo_images/${random_image_from_city})`
+  }
 
   /*
       NO ARGUMENTS
@@ -343,6 +433,8 @@ function update_programmes () {
 }
 
 
+
+
 // G
 // WRITE SPECIFICATION
 // You must understand how this function works. There will be questions about it
@@ -351,6 +443,36 @@ function update_programmes () {
 // Optional VG: Which parts of the function's code could be abstracted?
 //              Implement it
 function read_filters () {
+    /*
+      NO ARGUMENTS
+
+      SIDE EFFECTS
+      
+
+
+        1.
+        Kollar igenom vilka städer är "selected", för stad som har klassen "selected" tar deras id:n och gör om de till siffror via "callback_add_cityID" mha parseInt
+
+        2.
+        Loopar igenom "UNIVERSITES" för varje stad som är selected och alla med universitet med matchande cityID pushas läggs i "universities"
+
+        3.
+        Samma sak som 2 fast den loopar igenom alla program som har matchande universityID
+
+        4.
+        Kollar alla "level filter" som är selected och pushar deras ID som siffror till en array och sedan sist så mha funktionen "array_each" går den igenom alla sparade programme från 3 och ser om programmetns level är included i de valda levels
+
+        5.
+        Upprepa samma steg som 4 fast för languange sedan subject och sist strängen från search programmes
+
+        6.
+        Sist så returneras "programmes" dvs alla program som uppfyller alla kraven
+
+        VG: The top images (header) need to be updated here
+
+      NO RETURN VALUE
+
+  */
   
   const city_selected_dom = document.querySelectorAll("#country_filter li.selected");
 
@@ -384,8 +506,43 @@ function read_filters () {
   }
   array_each(universities, callback_add_programmes);
 
+  programmes = filter_programmes_by_type("level", programmes);
+  programmes = filter_programmes_by_type("language", programmes);
+  programmes = filter_programmes_by_type("subject", programmes);
+
+  // Abstraction
+  function filter_programmes_by_type(filter_type, programmes) {
+      if (filter_type === "subject") {
+        test_function = function test_function_subject (programme) {
+          return id_selected.includes(programme.subjectID);
+        }
+      } else if (filter_type === "language") {
+        test_function = function test_function_language (programme) {
+          return id_selected.includes(programme.languageID);
+        }
+      } else if (filter_type === "level") {
+        test_function = function test_function_level (programme) {
+          return id_selected.includes(programme.levelID);
+        }
+      }
+     // ett argument: 
+      const selected_dom = document.querySelectorAll(`#${filter_type}_filter li.selected`);
+     //
+      const id_selected = [];
+      function callback_add_ID (dom_element) {
+        const id_as_integer = parseInt(dom_element.dataset.id);
+        id_selected.push(id_as_integer);
+      }
+      array_each(selected_dom, callback_add_ID);
+    
+    
+    
+
+      return programmes = array_filter(programmes, test_function);
+  }
 
 
+/*
   const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
   const level_id_selected = [];
   function callback_add_levelID (dom_element) {
@@ -432,7 +589,7 @@ function read_filters () {
     return subject_id_selected.includes(programme.subjectID);
   }
   programmes = array_filter(programmes, test_function_subject);
-
+*/
 
 
   const search_string = document.querySelector("#search_field input").value;

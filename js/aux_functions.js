@@ -10,6 +10,7 @@ function get_random_number (max, min = 0) {
   return min + Math.floor( max * Math.random() );
 }
 
+
 function percenter (x, y) {
   // Returns the percentage of x in y
   // Example: percenter(9.5,10) returns 95, since 9.5 is 95% of 10.
