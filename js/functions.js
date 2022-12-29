@@ -316,9 +316,9 @@ function create_programme (programme) {
       const programme_uniID = programme.universityID;
       const programme_cityID = UNIVERSITIES[programme_uniID].cityID;
       const programme_countryID = CITIES[programme_cityID].countryID;
-      const programe_levelID = programme.levelID - 1;
-      const programe_subjectID = programme.subjectID
-      const programe_languageID = programme.languageID
+      const programme_levelID = programme.levelID - 1;
+      const programme_subjectID = programme.subjectID
+      const programme_languageID = programme.languageID
       const programme_sun_index = CITIES[programme_cityID].sun
       const programme_sun_percentage = percenter(CITIES[programme_cityID].sun, 365)
 
@@ -329,9 +329,9 @@ function create_programme (programme) {
 
       
       // Programme constants: for a random background image
-      const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
+      const BGimg_amount = CITIES[programme_cityID].imagesNormal.length - 1
       const random_BG_ID = get_random_number(BGimg_amount, 0)
-      const programme_backgroundImage = COUNTRIES[programme_countryID].imagesNormal[random_BG_ID]
+      const programme_backgroundImage = CITIES[programme_cityID].imagesNormal[random_BG_ID]
 
 
   // programme create element & set attributes
@@ -346,7 +346,7 @@ function create_programme (programme) {
       <h2>${programme.name}</h2>
       <p>${UNIVERSITIES[programme_uniID].name}</p>
       <p>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
-      <p> ${LEVELS[programe_levelID].name}, ${SUBJECTS[programe_subjectID].name}, ${LANGUAGES[programe_languageID].name}</p>
+      <p> ${LEVELS[programme_levelID].name}, ${SUBJECTS[programme_subjectID].name}, ${LANGUAGES[programme_languageID].name}</p>
     </div>
 
 
@@ -423,10 +423,10 @@ function update_programmes () {
   const header_images = document.querySelectorAll("#top_images > div");
 
   for (let i = 0; i < header_images.length; i++) {
-    const random_city_images = CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].imagesNormal
-    const random_image_from_city = random_city_images[get_random_number(random_city_images.length - 1, 0)]
-    console.log(random_image_from_city);
-    header_images[i].style.backgroundImage = `url(./media/geo_images/${random_image_from_city})`
+    const random_country_images = COUNTRIES[CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].countryID].imagesNormal
+    const random_image_from_country = random_country_images[get_random_number(random_country_images.length - 1, 0)]
+    header_images[i].style.backgroundImage = `url(./media/geo_images/${random_image_from_country})`
+
   }
 
   /*
