@@ -320,6 +320,11 @@ function create_programme (programme) {
       const programme_sun_index = CITIES[programme_cityID].sun
       const programme_sun_percentage = percenter(CITIES[programme_cityID].sun, 365)
 
+      const programme_country = array_find(COUNTRIES, find_country_by_id)
+      function find_country_by_id(country) {
+        if (country.id === programme_countryID) { return country}
+      }
+
       // Programme constants: for "show more" button
       const average_programme_grade = array_average(programme.entryGrades);
       const programme_Success_rate = array_average(programme.successRate)
@@ -327,7 +332,7 @@ function create_programme (programme) {
 
       
       // Programme constants: for a random background image
-      const BGimg_amount = CITIES[programme_cityID].imagesNormal.length - 1
+      const BGimg_amount = CITIES[programme_cityID].imagesNormal.length
       const random_BG_ID = get_random_number(BGimg_amount, 0)
       const programme_backgroundImage = CITIES[programme_cityID].imagesNormal[random_BG_ID]
 
@@ -343,7 +348,7 @@ function create_programme (programme) {
     <div class="top">
       <h2>${programme.name}</h2>
       <p>${UNIVERSITIES[programme_uniID].name}</p>
-      <p>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
+      <p>${CITIES[programme_cityID].name}, ${programme_country.name}</p>
       <p> ${LEVELS[programme_levelID].name}, ${SUBJECTS[programme_subjectID].name}, ${LANGUAGES[programme_languageID].name}</p>
     </div>
 
@@ -408,7 +413,6 @@ function update_programmes () {
   programme_list.innerHTML = "";
 
   const valid_programmes = read_filters();
-  console.log(valid_programmes.length);
   if (valid_programmes.length > 0) {
     programme_p.textContent = ""
     array_each(valid_programmes, create_programme)
@@ -421,8 +425,17 @@ function update_programmes () {
   const header_images = document.querySelectorAll("#top_images > div");
 
   for (let i = 0; i < header_images.length; i++) {
-    const random_country_images = COUNTRIES[CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].countryID].imagesNormal
-    const random_image_from_country = random_country_images[get_random_number(random_country_images.length - 1, 0)]
+    const random_programme = valid_programmes[get_random_number(valid_programmes.length, 0)]
+    const random_programme_country_id = CITIES[UNIVERSITIES[random_programme.universityID].cityID].countryID
+
+    const random_programme_country = array_find(COUNTRIES, find_country_by_id)
+    function find_country_by_id(country) {
+      if (country.id === random_programme_country_id) { return country}
+    }
+    console.log(random_programme_country);
+
+    const random_country_images = random_programme_country.imagesNormal
+    const random_image_from_country = random_country_images[get_random_number(random_country_images.length, 0)]
     header_images[i].style.backgroundImage = `url(./media/geo_images/${random_image_from_country})`
 
   }
@@ -539,7 +552,7 @@ function read_filters () {
       return programmes = array_filter(programmes, test_function);
   }
 
-
+  // Not abstracted function
 /*
   const level_selected_dom = document.querySelectorAll("#level_filter li.selected");
   const level_id_selected = [];
