@@ -144,8 +144,6 @@ function toggle_cities (event) {
   */
 }
 
-// Kolla igenom uppgift nedan en gång till
-
 // WRITE SPECIFICATION */
 // ATTENTION: You need to write the specification of all three functions:
 //            create_countries_cities_filters, create_country and create_city
