@@ -411,7 +411,6 @@ function update_programmes () {
   programme_list.innerHTML = "";
 
   const valid_programmes = read_filters();
-  console.log(valid_programmes.length);
   if (valid_programmes.length > 0) {
     programme_p.textContent = ""
     array_each(valid_programmes, create_programme)
@@ -424,10 +423,19 @@ function update_programmes () {
   const header_images = document.querySelectorAll("#top_images > div");
 
   for (let i = 0; i < header_images.length; i++) {
-    const random_city_images = CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].imagesNormal
-    const random_image_from_city = random_city_images[get_random_number(random_city_images.length - 1, 0)]
-    console.log(random_image_from_city);
-    header_images[i].style.backgroundImage = `url(/media/geo_images/${random_image_from_city})`
+    const random_programme = valid_programmes[get_random_number(valid_programmes.length, 0)]
+    const random_programme_country_id = CITIES[UNIVERSITIES[random_programme.universityID].cityID].countryID
+
+    const random_programme_country = array_find(COUNTRIES, find_country_by_id)
+    function find_country_by_id(country) {
+      if (country.id === random_programme_country_id) { return country}
+    }
+    console.log(random_programme_country);
+
+    const random_country_images = random_programme_country.imagesNormal
+    const random_image_from_country = random_country_images[get_random_number(random_country_images.length, 0)]
+    header_images[i].style.backgroundImage = `url(./media/geo_images/${random_image_from_country})`
+
   }
 
   /*
