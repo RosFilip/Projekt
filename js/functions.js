@@ -129,8 +129,6 @@ function toggle_cities (event) {
   */
 }
 
-// Kolla igenom uppgift nedan en gång till
-
 // WRITE SPECIFICATION */
 // ATTENTION: You need to write the specification of all three functions:
 //            create_countries_cities_filters, create_country and create_city
@@ -234,8 +232,8 @@ function create_levels_filter () {
   }
   array_each(LEVELS, create_level);
 }
-// Create Subjects Filter
 
+// Create Subjects Filter
 function create_subjects_filter () {
   function create_subject (subject) {
     const dom = create_filter_element({
@@ -249,7 +247,6 @@ function create_subjects_filter () {
 }
 
 // Create Search Field
-
 function create_language_filter () {
   function create_element (data) {
     const dom = create_filter_element({
@@ -263,8 +260,7 @@ function create_language_filter () {
 }
 
 
-// Create filters abstracted  *
-
+// Create filters abstracted 
 function create_filters(filter_type, DATA) {
   /*
     ARGUMENTS
@@ -303,9 +299,9 @@ function create_programme (programme) {
       const programme_uniID = programme.universityID;
       const programme_cityID = UNIVERSITIES[programme_uniID].cityID;
       const programme_countryID = CITIES[programme_cityID].countryID;
-      const programe_levelID = programme.levelID - 1;
-      const programe_subjectID = programme.subjectID
-      const programe_languageID = programme.languageID
+      const programme_levelID = programme.levelID - 1;
+      const programme_subjectID = programme.subjectID
+      const programme_languageID = programme.languageID
       const programme_sun_index = CITIES[programme_cityID].sun
       const programme_sun_percentage = percenter(CITIES[programme_cityID].sun, 365)
 
@@ -316,9 +312,9 @@ function create_programme (programme) {
 
       
       // Programme constants: for a random background image
-      const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
+      const BGimg_amount = CITIES[programme_cityID].imagesNormal.length - 1
       const random_BG_ID = get_random_number(BGimg_amount, 0)
-      const programme_backgroundImage = COUNTRIES[programme_countryID].imagesNormal[random_BG_ID]
+      const programme_backgroundImage = CITIES[programme_cityID].imagesNormal[random_BG_ID]
 
 
   // programme create element & set attributes
@@ -333,7 +329,7 @@ function create_programme (programme) {
       <h2>${programme.name}</h2>
       <p>${UNIVERSITIES[programme_uniID].name}</p>
       <p>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
-      <p> ${LEVELS[programe_levelID].name}, ${SUBJECTS[programe_subjectID].name}, ${LANGUAGES[programe_languageID].name}</p>
+      <p> ${LEVELS[programme_levelID].name}, ${SUBJECTS[programme_subjectID].name}, ${LANGUAGES[programme_languageID].name}</p>
     </div>
 
 
@@ -358,7 +354,7 @@ function create_programme (programme) {
 
 
   // Programme setting background-image
-  new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
+  new_programme_dom.style.backgroundImage = `url(./media/geo_images/${programme_backgroundImage})`
   document.querySelector("#programmes > ul").append(new_programme_dom);
 
 
@@ -410,10 +406,10 @@ function update_programmes () {
   const header_images = document.querySelectorAll("#top_images > div");
 
   for (let i = 0; i < header_images.length; i++) {
-    const random_city_images = CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].imagesNormal
-    const random_image_from_city = random_city_images[get_random_number(random_city_images.length - 1, 0)]
-    console.log(random_image_from_city);
-    header_images[i].style.backgroundImage = `url(/media/geo_images/${random_image_from_city})`
+    const random_country_images = COUNTRIES[CITIES[UNIVERSITIES[valid_programmes[get_random_number(valid_programmes.length - 1, 0)].universityID].cityID].countryID].imagesNormal
+    const random_image_from_country = random_country_images[get_random_number(random_country_images.length - 1, 0)]
+    header_images[i].style.backgroundImage = `url(./media/geo_images/${random_image_from_country})`
+
   }
 
   /*
@@ -447,30 +443,17 @@ function read_filters () {
       NO ARGUMENTS
 
       SIDE EFFECTS
-      
-
-
-        1.
-        Kollar igenom vilka städer är "selected", för stad som har klassen "selected" tar deras id:n och gör om de till siffror via "callback_add_cityID" mha parseInt
-
-        2.
-        Loopar igenom "UNIVERSITES" för varje stad som är selected och alla med universitet med matchande cityID pushas läggs i "universities"
-
-        3.
-        Samma sak som 2 fast den loopar igenom alla program som har matchande universityID
-
-        4.
-        Kollar alla "level filter" som är selected och pushar deras ID som siffror till en array och sedan sist så mha funktionen "array_each" går den igenom alla sparade programme från 3 och ser om programmetns level är included i de valda levels
-
-        5.
-        Upprepa samma steg som 4 fast för languange sedan subject och sist strängen från search programmes
-
-        6.
-        Sist så returneras "programmes" dvs alla program som uppfyller alla kraven
-
-        VG: The top images (header) need to be updated here
+        This function checks which filters are being used/are selected
+        It filters it in order of:
+          cities -> Universities in selected cities -> programmes in selected universites -> level/language/subject;
+        Last the functions checks if the search string is NOT empty
+          If the search field is NOT empty:
+            The programmes are filtered and all programmes with matching words in their name are passed
+          If the search field IS empty:
+            This part of the function is ignored
 
       NO RETURN VALUE
+      Returns an array of all programmes that match the selected filters.
 
   */
   
@@ -506,6 +489,7 @@ function read_filters () {
   }
   array_each(universities, callback_add_programmes);
 
+  
   programmes = filter_programmes_by_type("level", programmes);
   programmes = filter_programmes_by_type("language", programmes);
   programmes = filter_programmes_by_type("subject", programmes);
@@ -525,9 +509,8 @@ function read_filters () {
           return id_selected.includes(programme.levelID);
         }
       }
-     // ett argument: 
+
       const selected_dom = document.querySelectorAll(`#${filter_type}_filter li.selected`);
-     //
       const id_selected = [];
       function callback_add_ID (dom_element) {
         const id_as_integer = parseInt(dom_element.dataset.id);
