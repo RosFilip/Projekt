@@ -277,90 +277,95 @@ function create_filters(filter_type, DATA) {
 // G / VG (see details in specification)
 // CODE according to specifications */
 function create_programme (programme) {
-// programme constants
-      const programme_uniID = programme.universityID;
-      const programme_cityID = UNIVERSITIES[programme_uniID].cityID;
-      const programme_countryID = CITIES[programme_cityID].countryID;
-      const programe_levelID = programme.levelID - 1;
-      const programe_subjectID = programme.subjectID
-      const programe_languageID = programme.languageID
+  // programme constants: for programme information
+  const programme_uniID = programme.universityID;
+  const programme_cityID = UNIVERSITIES[programme_uniID].cityID;
+  const programme_countryID = CITIES[programme_cityID].countryID;
+  const programme_levelID = programme.levelID - 1;
+  const programme_subjectID = programme.subjectID
+  const programme_languageID = programme.languageID
+  const programme_sun_index = CITIES[programme_cityID].sun
+  const programme_sun_percentage = percenter(CITIES[programme_cityID].sun, 365)
 
-      const average_programme_grade = array_average(programme.entryGrades);
-      const programme_Success_rate = array_average(programme.successRate)
-      const exchange_ratio = `${programme.exchangeStudents}/${programme.localStudents}`;
+  const programme_country = array_find(COUNTRIES, find_country_by_id)
+  function find_country_by_id(country) {
+    if (country.id === programme_countryID) { return country}
+  }
 
-      
-// Programme random background image
-      const BGimg_amount = COUNTRIES[programme_countryID].imagesNormal.length - 1
-      const random_BG_ID = get_random_number(BGimg_amount, 0)
-      const programme_backgroundImage = COUNTRIES[programme_countryID].imagesNormal[random_BG_ID]
+  // Programme constants: for "show more" button
+  const average_programme_grade = array_average(programme.entryGrades);
+  const programme_Success_rate = array_average(programme.successRate)
+  const exchange_ratio = `${programme.exchangeStudents}/${programme.localStudents}`;
+
+  
+  // Programme constants: for a random background image
+  const BGimg_amount = CITIES[programme_cityID].imagesNormal.length
+  const random_BG_ID = get_random_number(BGimg_amount, 0)
+  const programme_backgroundImage = CITIES[programme_cityID].imagesNormal[random_BG_ID]
 
 
-// programme element & attributes
-  let new_programme_dom = document.createElement("div");
-  new_programme_dom.classList.add("programme");
-  new_programme_dom.setAttribute("id", `progamme${programme.id}`);
+// programme create element & set attributes
+let new_programme_dom = document.createElement("div");
+new_programme_dom.classList.add("programme");
+new_programme_dom.setAttribute("id", `progamme${programme.id}`);
 
 
 // Programme inner-HTML
-  new_programme_dom.innerHTML = `
-    <div class="top">
-      <h2>${programme.name}</h2>
-      <p>${UNIVERSITIES[programme_uniID].name}</p>
-      <p>${CITIES[programme_cityID].name}, ${COUNTRIES[programme_countryID].name}</p>
-      <p> ${LEVELS[programe_levelID].name}, ${SUBJECTS[programe_subjectID].name}, ${LANGUAGES[programe_languageID].name}</p>
-    </div>
+new_programme_dom.innerHTML = `
+<div class="top">
+  <h2>${programme.name}</h2>
+  <p>${UNIVERSITIES[programme_uniID].name}</p>
+  <p>${CITIES[programme_cityID].name}, ${programme_country.name}</p>
+  <p> ${LEVELS[programme_levelID].name}, ${SUBJECTS[programme_subjectID].name}, ${LANGUAGES[programme_languageID].name}</p>
+</div>
 
 
-      <div class="more_info">
-       <div class="extra_info">
-        <p>Average entry grade: ${average_programme_grade}</p>
-        <p>Success rate: ${programme_Success_rate}%</p>
-        <p>Exchange ratio: ${exchange_ratio}</p>
-       </div>
-      </div>
+  <div class="more_info">
+   <div class="extra_info">
+    <p>Average entry grade: ${average_programme_grade}</p>
+    <p>Success rate: ${programme_Success_rate}%</p>
+    <p>Exchange ratio: ${exchange_ratio}</p>
+   </div>
+  </div>
 
 
 
-    <div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${CITIES[programme_cityID].sun}(83%)</div>`;
+<div class="bottom_programme">${COUNTRIES[programme_countryID].name}, sun-index: ${programme_sun_index}(${programme_sun_percentage}%)</div>`;
 
 
 // Programme show more button & content
-    const showMoreButton = new_programme_dom.querySelector(".more_info");
-    showMoreButton.addEventListener("click", ()=>{
-      new_programme_dom.classList.toggle("show_more")
-    });
+const showMoreButton = new_programme_dom.querySelector(".more_info");
+showMoreButton.addEventListener("click", ()=>{
+  new_programme_dom.classList.toggle("show_more")
+});
 
 
-  
-
-
-// Programme background-image
-  new_programme_dom.style.backgroundImage = `url(/media/geo_images/${programme_backgroundImage})`
-  document.querySelector("#programmes > ul").append(new_programme_dom);
+// Programme setting background-image
+new_programme_dom.style.backgroundImage = `url(./media/geo_images/${programme_backgroundImage})`
+document.querySelector("#programmes > ul").append(new_programme_dom);
 
 
 
 /*
 
-    ARGUMENT
-      programme (object): One of the objects from PROGRAMMES
+ARGUMENT
+  programme (object): One of the objects from PROGRAMMES
 
-    SIDE-EFFECTS
-      This function creates the HTML-element that contains all the information
-      about one programme, as seen in the video / image.
-      
-      VG: The background image is a random image from among the images of the city
-          in which the programme is (via the university)
-      G:  No background image required.
+SIDE-EFFECTS
+  This function creates the HTML-element that contains all the information
+  about one programme, as seen in the video / image.
+  
+  VG: The background image is a random image from among the images of the city
+      in which the programme is (via the university)
+  G:  No background image required.
 
 
-      VG: The "see more" interaction must be included.
-      G:  The "see more" element is not required. And that information needs not be in place.
+  VG: The "see more" interaction must be included.
+  G:  The "see more" element is not required. And that information needs not be in place.
 
-    NO RETURN VALUE
+NO RETURN VALUE
 
-  */
+*/
 
 
 }
